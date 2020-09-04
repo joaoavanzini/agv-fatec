@@ -1,4 +1,4 @@
 # Autonomous Car
 ## Integrative Project - FATEC
 
-Codes of Raspberry Py on branch [rasp]
+Codes of Raspberry Pi on branch [rasp]
