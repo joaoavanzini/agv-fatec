@@ -71,10 +71,10 @@ def setMotorMode(mode, pwm):
         io.output(in4, io.LOW) 
         pwm1.ChangeDutyCycle(pwm)
         pwm2.ChangeDutyCycle(pwm)
-    #else:
-    #    print("else-stop")
-    #    io.output(in1, io.LOW)
-    #    io.output(in2, io.LOW)
-    #    io.output(in3, io.LOW)
-    #    io.output(in4, io.LOW)
-    #    io.cleanup()
+    else:
+        print("else-stop")
+        io.output(in1, io.LOW)
+        io.output(in2, io.LOW)
+        io.output(in3, io.LOW)
+        io.output(in4, io.LOW)
+        io.cleanup()
