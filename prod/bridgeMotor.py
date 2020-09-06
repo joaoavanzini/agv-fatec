@@ -32,6 +32,7 @@ pwm2.start(0)
 pwm1.ChangeDutyCycle(0)
 pwm2.ChangeDutyCycle(0)
 
+
 def setMotorMode(mode, pwm):
     if(mode == 1):
         print("forward")

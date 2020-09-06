@@ -7,7 +7,7 @@ if __name__ == '__main__':
     try:
         while True:
             Motor.setMotorMode(1, 100)
-            time.sleep(5)
+            time.sleep(3)
             Motor.setMotorMode(4, 100)
             time.sleep(5)
             Motor.setMotorMode(1, 100)
