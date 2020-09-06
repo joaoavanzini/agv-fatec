@@ -83,14 +83,18 @@ while(1):
     elif x=='a':
         print("left")
         GPIO.output(in3, GPIO.HIGH)
+        GPIO.output(in4, GPIO.LOW)
+        GPIO.output(in3, GPIO.LOW)
         GPIO.output(in4, GPIO.HIGH)
         temp1=0
         x='z'
 
     elif x=='d':
         print("right")
-        GPIO.output(in1, GPIO.HIGH)
+        GPIO.output(in1, GPIO.LOW)
         GPIO.output(in2, GPIO.HIGH)
+        GPIO.output(in3, GPIO.HIGH)
+        GPIO.output(in4, GPIO.LOW)
         temp1=0
         x='z'
 

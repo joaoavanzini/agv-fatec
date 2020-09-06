@@ -32,7 +32,6 @@ pwm2.start(0)
 pwm1.ChangeDutyCycle(0)
 pwm2.ChangeDutyCycle(0)
 
-
 def setMotorMode(mode, pwm):
     if(mode == 1):
         print("forward")
@@ -59,18 +58,23 @@ def setMotorMode(mode, pwm):
     elif(mode == 4):
         print("left")
         io.output(in1, io.HIGH)
-        io.output(in2, io.HIGH) 
+        io.output(in2, io.LOW) 
+        io.output(in3, io.LOW)
+        io.output(in4, io.HIGH)
         pwm1.ChangeDutyCycle(pwm)
         pwm2.ChangeDutyCycle(pwm)
     elif(mode == 5):
         print("right")
+        io.output(in1, io.LOW)
+        io.output(in2, io.HIGH) 
         io.output(in3, io.HIGH)
-        io.output(in4, io.HIGH)  
+        io.output(in4, io.LOW) 
         pwm1.ChangeDutyCycle(pwm)
         pwm2.ChangeDutyCycle(pwm)
-    else:
-        print("else-stop")
-        io.output(in1, io.LOW)
-        io.output(in2, io.LOW)
-        io.output(in3, io.LOW)
-        io.output(in4, io.LOW) 
+    #else:
+    #    print("else-stop")
+    #    io.output(in1, io.LOW)
+    #    io.output(in2, io.LOW)
+    #    io.output(in3, io.LOW)
+    #    io.output(in4, io.LOW)
+    #    io.cleanup()
