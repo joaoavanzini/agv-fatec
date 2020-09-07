@@ -1,6 +1,8 @@
 # coding:utf-8
 import RPi.GPIO as GPIO
 import time
+import json
+import paho.mqtt.client as mqtt
 import bridgeMotor as Motor
 
 leSensor = 5
@@ -11,13 +13,28 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(leSensor, GPIO.IN)
 GPIO.setup(reSensor, GPIO.IN)
 
+client = mqtt.Client("AGV")
+
+def destroy():
+     GPIO.cleanup()
+
+def sendData(topic, message):
+    client.connect("192.168.15.178", 1883, 60)
+    #client.publish("agv/linha", x)
+    client.publish(topic, message)
+
 if __name__ == '__main__':
     try:
         while True:
             
             le = GPIO.input(leSensor)
             re = GPIO.input(reSensor)
-            print("esq = ", le, "dir = ", re)
+
+            print("left = ", le, "right = ", re)
+            getJsonLiner = {"left: ": le, "right: ": re}
+            getJsonLiner = json.dumps(getJsonLiner)
+
+            sendData("agv/linha", getJsonLiner)
 
             Motor.setMotorMode(1, 100)
             if (le == 0 and re == 1):
@@ -35,4 +52,6 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         Motor.setMotorMode(3, 0)
         print("Stopped by user")
+        client.disconnect()
+        destroy()
         
