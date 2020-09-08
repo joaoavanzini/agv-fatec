@@ -74,8 +74,8 @@ if __name__ == '__main__':
             rightLine = GPIO.input(rightLineSensor)
             now = datetime.now()
 
-            print("leftLineft = ", leftLine, "right = ", rightLine)
-            getJsonLiner = {"leftLineft:": leftLine, "right:": rightLine, "datetime:": now.strftime("%d/%m/%Y %H:%M:%S")}
+            print("leftLine = ", leftLine, "rightLine = ", rightLine)
+            getJsonLiner = {"leftLine:": leftLine, "rightLine:": rightLine, "datetime:": now.strftime("%d/%m/%Y %H:%M:%S")}
             getJsonLiner = json.dumps(getJsonLiner)
 
             sendData("agv/sensor/linha", getJsonLiner)
