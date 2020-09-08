@@ -7,9 +7,9 @@ import RPi.GPIO as GPIO
 
 from queue import Queue
 
-queue1 = Queue()
-queue2 = Queue()
-queue3 = Queue()
+queueRight = Queue()
+queueCentral = Queue()
+queueLeft = Queue()
 
 def clean():
     GPIO.cleanup()
@@ -64,11 +64,11 @@ def getDistance(_id):
             distance = -1
 
         if _id == 1:
-            queue1.put(round(distance, 2))
+            queueRight.put(round(distance, 2))
         elif _id == 2:
-            queue2.put(round(distance, 2))
+            queueCentral.put(round(distance, 2))
         elif _id == 3:
-            queue3.put(round(distance, 2))
+            queueLeft.put(round(distance, 2))
         else: return None
 
         #return round(distance, 2)

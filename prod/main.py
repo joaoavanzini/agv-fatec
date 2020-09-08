@@ -8,27 +8,15 @@ import bridgeMotor as Motor
 from threading import Thread
 from queue import Empty
 
-import ultrassonicosensor as U
+import ultrassonicosensor as ultra
 
-leSensor = 5
-reSensor = 13
-
-# 1
-TRIGdir = 21
-ECHOdir = 20
-
-# 2
-TRIGcen = 16
-ECHOcen = 12
-
-# 3
-TRIGesq = 26
-ECHOesq = 19
+leftLineSensor = 5
+rightLineSensor = 13
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(leSensor, GPIO.IN)
-GPIO.setup(reSensor, GPIO.IN)
+GPIO.setup(leftLineSensor, GPIO.IN)
+GPIO.setup(rightLineSensor, GPIO.IN)
 
 client = mqtt.Client("AGV")
 
@@ -42,55 +30,55 @@ def sendData(topic, message):
 
 if __name__ == '__main__':
 
-    Thread(target=U.getDistance, daemon=True, args=[1]).start()
-    Thread(target=U.getDistance, daemon=True, args=[2]).start()
-    Thread(target=U.getDistance, daemon=True, args=[3]).start()
+    Thread(target=ultra.getDistance, daemon=True, args=[1]).start()
+    Thread(target=ultra.getDistance, daemon=True, args=[2]).start()
+    Thread(target=ultra.getDistance, daemon=True, args=[3]).start()
 
     try:
         while True:
             
             try:
-                val1 = U.queue1.get_nowait()
+                valueRight = ultra.queueRight.get_nowait()
             except Empty:
                 pass
             else:
-                sendData("agv/ultra/dir", val1)
+                sendData("agv/ultra/right", valueRight)
             
             try:
-                val2 = U.queue2.get_nowait()
+                valueCentral = ultra.queueCentral.get_nowait()
             except Empty:
                 pass
             else:
-                sendData("agv/ultra/cen", val2)
+                sendData("agv/ultra/central", valueCentral)
             
             try:
-                val3 = U.queue3.get_nowait()
+                valueLeft = ultra.queueLeft.get_nowait()
             except Empty:
                 pass
             else:
-                sendData("agv/ultra/esq", val3)
+                sendData("agv/ultra/left", valueLeft)
 
 
-            le = GPIO.input(leSensor)
-            re = GPIO.input(reSensor)
+            leftLine = GPIO.input(leftLineSensor)
+            rightLine = GPIO.input(rightLineSensor)
 
-            print("left = ", le, "right = ", re)
-            getJsonLiner = {"left: ": le, "right: ": re}
+            print("leftLineft = ", leftLine, "right = ", rightLine)
+            getJsonLiner = {"leftLineft: ": leftLine, "right: ": rightLine}
             getJsonLiner = json.dumps(getJsonLiner)
 
             sendData("agv/linha", getJsonLiner)
 
             Motor.setMotorMode(1, 100)
-            if (le == 0 and re == 1):
+            if (leftLine == 0 and rightLine == 1):
                 Motor.setMotorMode(4, 100)
-                le = GPIO.input(leSensor)
-                re = GPIO.input(reSensor)
+                leftLine = GPIO.input(leftLineSensor)
+                rightLine = GPIO.input(rightLineSensor)
 
 
-            if (re == 0 and le == 1):
+            if (rightLine == 0 and leftLine == 1):
                 Motor.setMotorMode(5, 100)
-                le = GPIO.input(leSensor)
-                re = GPIO.input(reSensor)
+                leftLine = GPIO.input(leftLineSensor)
+                rightLine = GPIO.input(rightLineSensor)
 
 
     except KeyboardInterrupt:
