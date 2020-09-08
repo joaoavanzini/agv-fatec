@@ -10,6 +10,8 @@ from queue import Empty
 
 import ultrassonicosensor as ultra
 
+from datetime import datetime
+
 leftLineSensor = 5
 rightLineSensor = 13
 
@@ -42,31 +44,41 @@ if __name__ == '__main__':
             except Empty:
                 pass
             else:
-                sendData("agv/ultra/right", valueRight)
+                now = datetime.now()
+                getJsonRightUltra = {"value:": valueRight, "type:":"cm", "position:":"Right", "datetime:": now.strftime("%d/%m/%Y %H:%M:%S")}
+                getJsonRightUltra = json.dumps(getJsonRightUltra)
+                sendData("agv/sensor/ultra/right", getJsonRightUltra)
             
             try:
                 valueCentral = ultra.queueCentral.get_nowait()
             except Empty:
                 pass
             else:
-                sendData("agv/ultra/central", valueCentral)
+                now = datetime.now()
+                getJsonCentralUltra = {"value:": valueCentral, "type:":"cm", "position:":"Central", "datetime:": now.strftime("%d/%m/%Y %H:%M:%S")}
+                getJsonCentralUltra = json.dumps(getJsonCentralUltra)
+                sendData("agv/sensor/ultra/central", getJsonCentralUltra)
             
             try:
                 valueLeft = ultra.queueLeft.get_nowait()
             except Empty:
                 pass
             else:
-                sendData("agv/ultra/left", valueLeft)
+                now = datetime.now()
+                getJsonLeftUltra = {"value:": valueLeft, "type:":"cm", "position:":"Left", "datetime:": now.strftime("%d/%m/%Y %H:%M:%S")}
+                getJsonLeftUltra = json.dumps(getJsonLeftUltra)               
+                sendData("agv/sensor/ultra/left", getJsonLeftUltra)
 
 
             leftLine = GPIO.input(leftLineSensor)
             rightLine = GPIO.input(rightLineSensor)
+            now = datetime.now()
 
             print("leftLineft = ", leftLine, "right = ", rightLine)
-            getJsonLiner = {"leftLineft: ": leftLine, "right: ": rightLine}
+            getJsonLiner = {"leftLineft:": leftLine, "right:": rightLine, "datetime:": now.strftime("%d/%m/%Y %H:%M:%S")}
             getJsonLiner = json.dumps(getJsonLiner)
 
-            sendData("agv/linha", getJsonLiner)
+            sendData("agv/sensor/linha", getJsonLiner)
 
             Motor.setMotorMode(1, 100)
             if (leftLine == 0 and rightLine == 1):
