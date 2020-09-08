@@ -5,8 +5,25 @@ import json
 import paho.mqtt.client as mqtt
 import bridgeMotor as Motor
 
+from threading import Thread
+from queue import Empty
+
+import ultrassonicosensor as U
+
 leSensor = 5
 reSensor = 13
+
+# 1
+TRIGdir = 21
+ECHOdir = 20
+
+# 2
+TRIGcen = 16
+ECHOcen = 12
+
+# 3
+TRIGesq = 26
+ECHOesq = 19
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -24,9 +41,36 @@ def sendData(topic, message):
     client.publish(topic, message)
 
 if __name__ == '__main__':
+
+    Thread(target=U.getDistance, daemon=True, args=[1]).start()
+    Thread(target=U.getDistance, daemon=True, args=[2]).start()
+    Thread(target=U.getDistance, daemon=True, args=[3]).start()
+
     try:
         while True:
             
+            try:
+                val1 = U.queue1.get_nowait()
+            except Empty:
+                pass
+            else:
+                sendData("agv/ultra/dir", val1)
+            
+            try:
+                val2 = U.queue2.get_nowait()
+            except Empty:
+                pass
+            else:
+                sendData("agv/ultra/cen", val2)
+            
+            try:
+                val3 = U.queue3.get_nowait()
+            except Empty:
+                pass
+            else:
+                sendData("agv/ultra/esq", val3)
+
+
             le = GPIO.input(leSensor)
             re = GPIO.input(reSensor)
 
