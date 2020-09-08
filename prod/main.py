@@ -74,24 +74,38 @@ if __name__ == '__main__':
             rightLine = GPIO.input(rightLineSensor)
             now = datetime.now()
 
-            print("leftLine = ", leftLine, "rightLine = ", rightLine)
+            # segue a linha
+
+            #print("leftLine = ", leftLine, "rightLine = ", rightLine)
             getJsonLiner = {"leftLine:": leftLine, "rightLine:": rightLine, "datetime:": now.strftime("%d/%m/%Y %H:%M:%S")}
             getJsonLiner = json.dumps(getJsonLiner)
-
             sendData("agv/sensor/linha", getJsonLiner)
 
+            now = datetime.now()
+            getJsonHistoric = {"Current position:":"forward","datetime:": now.strftime("%d/%m/%Y %H:%M:%S")}
+            getJsonHistoric = json.dumps(getJsonHistoric)               
+            sendData("agv/historic", getJsonHistoric)
             Motor.setMotorMode(1, 100)
+
+
             if (leftLine == 0 and rightLine == 1):
+                now = datetime.now()
                 Motor.setMotorMode(4, 100)
+                getJsonHistoric = {"Current position:":"left","datetime:": now.strftime("%d/%m/%Y %H:%M:%S")}
+                getJsonHistoric = json.dumps(getJsonHistoric)               
+                sendData("agv/historic", getJsonHistoric)
                 leftLine = GPIO.input(leftLineSensor)
                 rightLine = GPIO.input(rightLineSensor)
 
 
             if (rightLine == 0 and leftLine == 1):
                 Motor.setMotorMode(5, 100)
+                getJsonHistoric = {"Current position:":"right","datetime:": now.strftime("%d/%m/%Y %H:%M:%S")}
+                getJsonHistoric = json.dumps(getJsonHistoric)               
+                sendData("agv/historic", getJsonHistoric)
                 leftLine = GPIO.input(leftLineSensor)
                 rightLine = GPIO.input(rightLineSensor)
-
+     
 
     except KeyboardInterrupt:
         Motor.setMotorMode(3, 0)
