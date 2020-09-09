@@ -45,7 +45,7 @@ def getDistance(_id):
         GPIO.setup(echo, GPIO.IN)
 
         GPIO.output(trig, False)
-        time.sleep(1)
+        time.sleep(0.02)
 
         GPIO.output(trig, True)
         time.sleep(0.00001)

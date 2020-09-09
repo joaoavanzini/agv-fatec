@@ -48,6 +48,7 @@ if __name__ == '__main__':
                 getJsonRightUltra = {"value:": valueRight, "type:":"cm", "position:":"Right", "datetime:": now.strftime("%d/%m/%Y %H:%M:%S")}
                 getJsonRightUltra = json.dumps(getJsonRightUltra)
                 sendData("agv/sensor/ultra/right", getJsonRightUltra)
+                valueRight = 0
             
             try:
                 valueCentral = ultra.queueCentral.get_nowait()
@@ -58,6 +59,7 @@ if __name__ == '__main__':
                 getJsonCentralUltra = {"value:": valueCentral, "type:":"cm", "position:":"Central", "datetime:": now.strftime("%d/%m/%Y %H:%M:%S")}
                 getJsonCentralUltra = json.dumps(getJsonCentralUltra)
                 sendData("agv/sensor/ultra/central", getJsonCentralUltra)
+                valueCentral = 0
             
             try:
                 valueLeft = ultra.queueLeft.get_nowait()
@@ -68,6 +70,7 @@ if __name__ == '__main__':
                 getJsonLeftUltra = {"value:": valueLeft, "type:":"cm", "position:":"Left", "datetime:": now.strftime("%d/%m/%Y %H:%M:%S")}
                 getJsonLeftUltra = json.dumps(getJsonLeftUltra)               
                 sendData("agv/sensor/ultra/left", getJsonLeftUltra)
+                valueLeft = 0
 
 
             leftLine = GPIO.input(leftLineSensor)
