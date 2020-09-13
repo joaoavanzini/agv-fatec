@@ -14,34 +14,34 @@ void setup(){
 void loop(){
  
     if((analogRead(eixo_XA)) == 0){ //SE LEITURA FOR IGUAL A 0, FAZ
-        Serial.println("PARA CIMA - A"); //IMPRIME O TEXTO NO MONITOR SERIAL
+        Serial.println("1-A"); //IMPRIME O TEXTO NO MONITOR SERIAL
     }else{
           if((analogRead(eixo_XA)) == 1023){ //SE LEITURA FOR IGUAL A 1023, FAZ
-              Serial.println("PARA BAIXO - A"); //IMPRIME O TEXTO NO MONITOR SERIAL
+              Serial.println("2-A"); //IMPRIME O TEXTO NO MONITOR SERIAL
           }else{
                 if((analogRead(eixo_YA)) == 0){ //SE LEITURA FOR IGUAL A 0, FAZ
-                  Serial.println("DIREITA - A"); //IMPRIME O TEXTO NO MONITOR SERIAL
+                  Serial.println("3-A"); //IMPRIME O TEXTO NO MONITOR SERIAL
                 }else{
                       if((analogRead(eixo_YA)) == 1023){ //SE LEITURA FOR IGUAL A 1023, FAZ
-                          Serial.println("ESQUERDA - A"); //IMPRIME O TEXTO NO MONITOR SERIAL
+                          Serial.println("4-A"); //IMPRIME O TEXTO NO MONITOR SERIAL
                       }else{
                             if(digitalRead(botaoA) == LOW){ //SE LEITURA FOR IGUAL A HIGH, FAZ
-                               Serial.println("BOTAO PRESSIONADO - A"); //IMPRIME O TEXTO NO MONITOR SERIAL
+                               Serial.println("5-A"); //IMPRIME O TEXTO NO MONITOR SERIAL
                             }else{
                                if((analogRead(eixo_XB)) == 0){ //SE LEITURA FOR IGUAL A 0, FAZ
-                                    Serial.println("PARA CIMA - B"); //IMPRIME O TEXTO NO MONITOR SERIAL
+                                    Serial.println("1-B"); //IMPRIME O TEXTO NO MONITOR SERIAL
                                 }else{
                                     if((analogRead(eixo_XB)) == 1023){ //SE LEITURA FOR IGUAL A 1023, FAZ
-                                        Serial.println("PARA BAIXO - B"); //IMPRIME O TEXTO NO MONITOR SERIAL
+                                        Serial.println("2-B"); //IMPRIME O TEXTO NO MONITOR SERIAL
                                     }else{
                                             if((analogRead(eixo_YB)) == 0){ //SE LEITURA FOR IGUAL A 0, FAZ
-                                            Serial.println("DIREITA - B"); //IMPRIME O TEXTO NO MONITOR SERIAL
+                                            Serial.println("3-B"); //IMPRIME O TEXTO NO MONITOR SERIAL
                                             }else{
                                                 if((analogRead(eixo_YB)) == 1023){ //SE LEITURA FOR IGUAL A 1023, FAZ
-                                                    Serial.println("ESQUERDA - B"); //IMPRIME O TEXTO NO MONITOR SERIAL
+                                                    Serial.println("4-B"); //IMPRIME O TEXTO NO MONITOR SERIAL
                                                 }else{
                                                         if(digitalRead(botaoB) == LOW){ //SE LEITURA FOR IGUAL A HIGH, FAZ
-                                                        Serial.println("BOTAO PRESSIONADO - B"); //IMPRIME O TEXTO NO MONITOR SERIAL
+                                                        Serial.println("5-B"); //IMPRIME O TEXTO NO MONITOR SERIAL
                                                         }  
                                                 }
                                             }
