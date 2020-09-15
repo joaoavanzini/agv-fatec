@@ -26,7 +26,7 @@ def destroy():
      GPIO.cleanup()
 
 def sendData(topic, message):
-    client.connect("192.168.15.178", 1883, 60)
+    client.connect("192.168.15.79", 1883, 60)
     #client.publish("agv/linha", x)
     client.publish(topic, message)
 
@@ -45,7 +45,7 @@ if __name__ == '__main__':
                 pass
             else:
                 now = datetime.now()
-                getJsonRightUltra = {"value:": valueRight, "type:":"cm", "position:":"Right", "datetime:": now.strftime("%d/%m/%Y %H:%M:%S")}
+                getJsonRightUltra = {"right":[{"distance": valueRight, "type":"cm", "position":"Right", "datetime": now.strftime("%d/%m/%Y %H:%M:%S")}]}
                 getJsonRightUltra = json.dumps(getJsonRightUltra)
                 sendData("agv/sensor/ultra/right", getJsonRightUltra)
                 valueRight = 0
@@ -56,7 +56,7 @@ if __name__ == '__main__':
                 pass
             else:
                 now = datetime.now()
-                getJsonCentralUltra = {"value:": valueCentral, "type:":"cm", "position:":"Central", "datetime:": now.strftime("%d/%m/%Y %H:%M:%S")}
+                getJsonCentralUltra = {"central":[{"distance": valueCentral, "type":"cm", "position":"Central", "datetime": now.strftime("%d/%m/%Y %H:%M:%S")}]}
                 getJsonCentralUltra = json.dumps(getJsonCentralUltra)
                 sendData("agv/sensor/ultra/central", getJsonCentralUltra)
                 valueCentral = 0
@@ -67,7 +67,7 @@ if __name__ == '__main__':
                 pass
             else:
                 now = datetime.now()
-                getJsonLeftUltra = {"value:": valueLeft, "type:":"cm", "position:":"Left", "datetime:": now.strftime("%d/%m/%Y %H:%M:%S")}
+                getJsonLeftUltra = {"left":[{"distance": valueLeft, "type":"cm", "position":"Left", "datetime": now.strftime("%d/%m/%Y %H:%M:%S")}]}
                 getJsonLeftUltra = json.dumps(getJsonLeftUltra)               
                 sendData("agv/sensor/ultra/left", getJsonLeftUltra)
                 valueLeft = 0
