@@ -80,9 +80,9 @@ if __name__ == '__main__':
             # segue a linha
 
             #print("leftLine = ", leftLine, "rightLine = ", rightLine)
-            getJsonLiner = {"leftLine:": leftLine, "rightLine:": rightLine, "datetime:": now.strftime("%d/%m/%Y %H:%M:%S")}
+            getJsonLiner = {"line":[{"leftline": leftLine, "rightline": rightLine, "datetime": now.strftime("%d/%m/%Y %H:%M:%S")}]}
             getJsonLiner = json.dumps(getJsonLiner)
-            sendData("agv/sensor/linha", getJsonLiner)
+            sendData("agv/sensor/line", getJsonLiner)
 
             Motor.setMotorMode(1, 100)
             if (leftLine == 0 and rightLine == 1):
